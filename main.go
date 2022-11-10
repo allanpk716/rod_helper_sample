@@ -7,7 +7,6 @@ import (
 	"github.com/WQGroup/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/go-rod/rod"
-	"github.com/go-rod/rod/lib/launcher"
 	"github.com/go-rod/rod/lib/proto"
 	"github.com/pkg/errors"
 	"gopkg.in/elazarl/goproxy.v1"
@@ -24,15 +23,17 @@ func main() {
 	// 等待服务器启动
 	time.Sleep(2 * time.Second)
 
-	nowLancher := launcher.New().Headless(false)
-	purl := nowLancher.MustLaunch()
-	browser := rod.New().ControlURL(purl).MustConnect()
+	//nowLancher := launcher.New().Headless(false)
+	//purl := nowLancher.MustLaunch()
+	//browser := rod.New().ControlURL(purl).MustConnect()
+	//
+	//logger.Infoln("LoadBody == true")
+	//testProcessor(browser, true)
+	//
+	//logger.Infoln("LoadBody == false")
+	//testProcessor(browser, false)
 
-	logger.Infoln("LoadBody == true")
-	testProcessor(browser, true)
-
-	logger.Infoln("LoadBody == false")
-	testProcessor(browser, false)
+	select {}
 
 	logger.Infoln("All Done")
 }
@@ -147,6 +148,11 @@ func startHttpServer() {
 	engine.GET("/test_page", func(c *gin.Context) {
 
 		c.JSON(403, gin.H{"message": "Forbidden"})
+	})
+	engine.GET("/wait_long_time", func(c *gin.Context) {
+
+		time.Sleep(120 * time.Second)
+		c.JSON(200, gin.H{"message": "haha"})
 	})
 	srv = &http.Server{
 		Addr:    fmt.Sprintf(":%d", 19101),

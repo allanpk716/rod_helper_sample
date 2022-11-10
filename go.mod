@@ -40,3 +40,5 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
+
+replace github.com/go-rod/rod => github.com/allanpk716/rod v0.0.0-20221109074740-6305c86390cb
